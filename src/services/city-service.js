@@ -21,7 +21,19 @@ async function createCity(data){
         
     }
 }
+async function deleteCityByid(id){
+    try {
+        const city = await cityrepository.destroy(id); 
+        return city;
+    } catch (error) {
+        if(error.statusCode == StatusCodes.NOT_FOUND){
+            throw new AppError(error.message,error.statusCode);
+        }
+        throw new AppError('Cannot delete the airpane',StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+}
 
 module.exports = {
-    createCity
+    createCity,
+    deleteCityByid
 }
