@@ -33,7 +33,24 @@ async function getAllAirplanes(){
     
 }
 
+async function getAirplaneById(id){
+    try {
+        const airplane = await airplanerepositry.get(id); 
+        console.log(airplane)
+        return airplane;
+        
+    } catch (error) {
+        
+        if(error.statusCode == StatusCodes.NOT_FOUND){
+            throw new AppError(error.message,error.statusCode);
+        }
+        throw new AppError('Cannot fetch data of all the airpane',StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+    
+}
+
 module.exports = {
     createAirplane,
-    getAllAirplanes
+    getAllAirplanes,
+    getAirplaneById
 }

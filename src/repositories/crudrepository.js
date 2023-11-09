@@ -1,5 +1,6 @@
 const {Logger } = require('../config');
-
+const {StatusCodes} = require('http-status-codes');
+const AppError = require('../utils/errors/app-error')
 class CrudRepository{
     constructor(model){
         this.model=model;
@@ -23,18 +24,19 @@ class CrudRepository{
        
     }
     async get(data){
-        
         const resposne = await this.model.findByPk(data);
+        if(!resposne){
+            throw new AppError('this id which you sent not present in databse',StatusCodes.NOT_FOUND);
+        }
         return resposne;
-       
     }
-    async getAll(data){
+    async getAll(){
     
         const resposne = await this.model.findAll();
         return resposne;
         
     }
-    async get(id,data){
+    async update(id,data){
      
         const resposne = await this.model.update(data,{
             where: {
