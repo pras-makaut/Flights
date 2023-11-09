@@ -14,14 +14,15 @@ class CrudRepository{
     }
 
     async destroy(data){
-        
         const resposne = await this.model.destroy({
             where:{
                 id:data
             }
         });
+        if(!resposne){
+            throw new AppError('this id which you want to delete not present in databse',StatusCodes.NOT_FOUND);
+        }
         return resposne;
-       
     }
     async get(data){
         const resposne = await this.model.findByPk(data);
