@@ -38,14 +38,17 @@ class CrudRepository{
         
     }
     async update(id,data){
-     
         const resposne = await this.model.update(data,{
             where: {
                 id:id
             } 
         });
+        console.log(resposne)
+        if(resposne==0){
+            throw new AppError('this id which you want to update not present in databse',StatusCodes.NOT_FOUND);
+        }
+
         return resposne;
-        
     }
 
 }

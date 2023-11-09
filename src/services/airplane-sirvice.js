@@ -56,10 +56,22 @@ async function deleteAirplaneById(id){
         throw new AppError('Cannot delete the airpane',StatusCodes.INTERNAL_SERVER_ERROR);
     }
 }
+async function updateAirplane(id,data){
+    try {
 
+        const airplane = await airplanerepositry.update(id,data); 
+        return airplane;
+    } catch (error) {
+        if(error.statusCode == StatusCodes.NOT_FOUND){
+            throw new AppError(error.message,error.statusCode);
+        }
+        throw new AppError('Cannot update the airpane',StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+}
 module.exports = {
     createAirplane,
     getAllAirplanes,
     getAirplaneById,
-    deleteAirplaneById
+    deleteAirplaneById,
+    updateAirplane
 }
