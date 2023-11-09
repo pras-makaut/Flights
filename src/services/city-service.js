@@ -32,8 +32,20 @@ async function deleteCityByid(id){
         throw new AppError('Cannot delete the airpane',StatusCodes.INTERNAL_SERVER_ERROR);
     }
 }
+async function updateCity(id,data){
+    try {
 
+        const city = await cityrepository.update(id,data); 
+        return city;
+    } catch (error) {
+        if(error.statusCode == StatusCodes.NOT_FOUND){
+            throw new AppError(error.message,error.statusCode);
+        }
+        throw new AppError('Cannot update the City',StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+}
 module.exports = {
     createCity,
-    deleteCityByid
+    deleteCityByid,
+    updateCity
 }

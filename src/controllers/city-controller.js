@@ -46,7 +46,33 @@ async function deleteCityById(req,res){
     }
 }
 
+/**
+ * 
+ * Patch : /cities
+ * req-body : {
+ *  id:1,
+ *  Name:'Kolkata'
+ * }
+ *  
+ */
+
+async function updateCity(req,res){
+    try {
+        console.log(req.body);
+        const city = await CityService.updateCity(req.body.id,req.body);
+        SuccessResponse.message =`Successfully update the city with ${req.body.id} id`;
+        SuccessResponse.data = city;
+        return res.
+                status(StatusCodes.OK).
+                json(SuccessResponse);        
+    } catch (error) {
+        ErrorResponse.error = error;
+        return res.status(error.statusCode).json(ErrorResponse);
+    }
+}
+
 module.exports = {
     createCity,
-    deleteCityById
+    deleteCityById,
+    updateCity
 }
