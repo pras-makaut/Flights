@@ -13,48 +13,36 @@ class CrudRepository{
     }
 
     async destroy(data){
-        try {
-            const resposne = await this.model.destroy({
-                where:{
-                    id:data
-                }
-            });
-            return resposne;
-        } catch (error) {
-            Logger.error('Something went wrong in the crud repo : destroy');
-            throw error;
-        }
+        
+        const resposne = await this.model.destroy({
+            where:{
+                id:data
+            }
+        });
+        return resposne;
+       
     }
     async get(data){
-        try {
-            const resposne = await this.model.findByPk(data);
-            return resposne;
-        } catch (error) {
-            Logger.error('Something went wrong in the crud repo : get');
-            throw error;
-        }
+        
+        const resposne = await this.model.findByPk(data);
+        return resposne;
+       
     }
     async getAll(data){
-        try {
-            const resposne = await this.model.findAll();
-            return resposne;
-        } catch (error) {
-            Logger.error('Something went wrong in the crud repo : getAll');
-            throw error;
-        }
+    
+        const resposne = await this.model.findAll();
+        return resposne;
+        
     }
     async get(id,data){
-        try {
-            const resposne = await this.model.update(data,{
-                where: {
-                    id:id
-                } 
-            });
-            return resposne;
-        } catch (error) {
-            Logger.error('Something went wrong in the crud repo : update');
-            throw error;
-        }
+     
+        const resposne = await this.model.update(data,{
+            where: {
+                id:id
+            } 
+        });
+        return resposne;
+        
     }
 
 }
