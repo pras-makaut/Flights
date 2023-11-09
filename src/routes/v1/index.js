@@ -3,7 +3,9 @@ const router = express.Router();
 const {InfoController} = require('../../controllers');
 
 const airplaneRoutes = require('./airplane-routes');
+const cityRoutes = require('./city-routes')
 
+router.use('/cities',cityRoutes);
 router.use('/airplanes',airplaneRoutes);
 router.get('/info',InfoController.info);
 
