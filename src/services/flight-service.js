@@ -3,7 +3,10 @@ const { FlightRepository } = require('../repositories');
 const AppError = require('../utils/errors/app-error');
 const {Op} = require('sequelize');
 
+const { AirportRepository } = require('../repositories') 
+
 const {compareDate} = require('../utils/helpers/datetime-helper')
+const airportrepositry = new AirportRepository();
 
 const flightrepository = new FlightRepository();
 
@@ -64,7 +67,12 @@ async function getAllFlights(query){
         sortFilter = sortFilters;
     }
     try {
-        const flights = await flightrepository.getAllFlights(customFilter,sortFilter);
+        let flights = await flightrepository.getAllFlights(customFilter,sortFilter);
+        for(let i=0;i<flights.length;i++){
+            flights[i].arrivalAirportId=await airportrepositry.getAirportByCode({code:flights[i].arrivalAirportId});
+            flights[i].departureAirportId=await airportrepositry.getAirportByCode({code:flights[i].departureAirportId});
+        }
+        
         return flights;
     } catch (error) {
         throw new AppError('Cannot fetch data of all the flights',StatusCodes.INTERNAL_SERVER_ERROR);
@@ -75,5 +83,6 @@ async function getAllFlights(query){
 
 module.exports = {
     createFlight,
-    getAllFlights
+    getAllFlights,
+
 }
