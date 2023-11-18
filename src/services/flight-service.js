@@ -71,9 +71,21 @@ async function getAllFlights(query){
 
 }
 
+async function getFlightById(id){
+    try {
+        const flight = await flightrepository.get(id); 
+        return flight;
+    } catch (error) {
+        if(error.statusCode == StatusCodes.NOT_FOUND){
+            throw new AppError(error.message,error.statusCode);
+        }
+        throw new AppError(`Cannot fetch the flight with id ${id}`,StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+
+}
 
 module.exports = {
     createFlight,
     getAllFlights,
-
+    getFlightById
 }

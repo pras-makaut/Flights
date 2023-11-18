@@ -10,4 +10,9 @@ router.post('/',FlightMiddlewere.validateCreateRequest,FlightController.createFl
 // api/v1/flights?TRIPS=MUM-DELHI GET
 router.get('/',FlightController.getAllFlights);
 
+
+// api/v1/flights/:id
+
+router.get('/:id',FlightController.getFlightById);
+
 module.exports = router;

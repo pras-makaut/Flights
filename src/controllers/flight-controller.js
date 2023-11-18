@@ -54,8 +54,28 @@ async function getAllFlights(req,res){
         return res.status(error.statusCode).json(ErrorResponse);
     }
 }
+/**
+ * 
+ * GET : /flights/:id
+ * req-body : {}
+ *  
+ */
+async function getFlightById(req,res){
+    try {
+        const flight = await FlightService.getFlightById(req.params.id);
+        SuccessResponse.message =`Successfully get the flight with ${req.params.id} id`;
+        SuccessResponse.data = flight;
+        return res.
+                status(StatusCodes.OK).
+                json(SuccessResponse);        
+    } catch (error) {
+        ErrorResponse.error = error;
+        return res.status(error.statusCode).json(ErrorResponse);
+    }
+}
 module.exports = {
     createFlight,
-    getAllFlights
+    getAllFlights,
+    getFlightById
     
 }
